@@ -28,6 +28,10 @@ allprojects {
 ```Java
 compile 'com.github.bhavin-qfonapp:EpMedia:v1.0.3'
 ```
+
+[![](https://jitpack.io/v/bhavin-qfonapp/EpMedia-bhavin.svg)](https://jitpack.io/#bhavin-qfonapp/EpMedia-bhavin)
+
+
 ## Single video processing:
 * create pending video:
 ```Java
