@@ -26,7 +26,7 @@ allprojects {
 ```
 * Add gradle dependency:
 ```Java
-compile 'com.github.yangjie10930:EpMedia:v1.0.1'
+compile 'com.github.bhavin-qfonapp:EpMedia:v1.0.1'
 ```
 ## Single video processing:
 * create pending video:

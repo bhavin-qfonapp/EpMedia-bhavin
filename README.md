@@ -1,23 +1,21 @@
-[![](https://img.shields.io/badge/minSdkVersion-21-green.svg)](https://developer.android.google.cn) [![](https://img.shields.io/badge/FFmpeg-4.2.2-orange.svg)](https://ffmpeg.org/download.html#release_3.3) 
+[![](https://img.shields.io/badge/minSdkVersion-21-green.svg)](https://developer.android.google.cn) [![](https://img.shields.io/badge/FFmpeg-4.2.2-orange.svg)](https://ffmpeg.org/download.html#release_3.3)
 [![](https://jitpack.io/v/yangjie10930/EpMedia.svg)](https://jitpack.io/#yangjie10930/EpMedia)
-#### 中文 / [English](https://github.com/yangjie10930/EpMedia/blob/master/Readme-English.md)
+#### English / [中文](https://github.com/yangjie10930/EpMedia/blob/master/README.md)
 
 # EpMedia
-基于FFmpeg开发的视频处理框架，简单易用，体积小，帮助使用者快速实现视频处理功能。包含以下功能：剪辑，裁剪，旋转，镜像，合并，分离，添加LOGO，添加滤镜，添加背景音乐，加速减速视频，倒放音视频。</br>
+The video processing framework based on FFmpeg developed on Android is simple, easy to use, and small in size, helping users quickly realize video processing functions. Contains the following functions: editing, cropping, rotating, mirroring, merging, separating, variable speed, adding LOGO, adding filters, adding background music, accelerating and decelerating video, rewinding audio and video.
 
-好用的话麻烦给个star,感谢您的支持与鼓励O(∩_∩)O
+<a href="https://github.com/yangjie10930/EpMediaDemo" target="_blank">Demo</a>
 
-<a href="https://github.com/yangjie10930/EpMediaDemo" target="_blank">Demo点这里</a>   
-
-##### V1.0.0版本更新说明
-1. 更新FFmpeg至4.2.2版本，使用ndk-r21编译，采用clang工具;
-1. 新增x86_64支持;
-1. 移除添加文字的功能(由于依赖库编译的一些问题，该方法暂时无法使用，后续会加回，如果需要此功能，请使用v0.9.5版本);
-1. 添加MediaCodec的支持。
+##### V1.0.0 version update instructions
+1. Update FFmpeg to version 4.2.2, compile with ndk-r21, use clang tool;
+1. Added x86_64 support;
+1. Removed the function of adding text (due to some problems of dependent library compilation, this method is temporarily unavailable, and will be added back later, if you need this function, please use v0.9.5 version);
+1. Add MediaCodec support.
 
 
-## 使用方法:
-* build.gradle里添加:
+## How to use:
+* Add in build.gradle:
 ```Java
 allprojects {
 		repositories {
@@ -26,134 +24,130 @@ allprojects {
 		}
 	}
 ```
-* 添加gradle依赖:
+* Add gradle dependency:
 ```Java
-compile 'com.github.yangjie10930:EpMedia:v1.0.1'
+compile 'com.github.bhavin-qfonapp:EpMedia:v1.0.3'
 ```
-## 单个视频处理:
-* 创建待处理视频:
+## Single video processing:
+* create pending video:
 ```Java
 EpVideo epVideo = new EpVideo(url);
 ```
-* 剪辑
+* clip
 ```Java
-//一个参数为剪辑的起始时间，第二个参数为持续时间,单位：秒
-epVideo.clip(1,2);//从第一秒开始，剪辑两秒
+//The first parameter is the start time of the clip, the second parameter is the duration, in seconds
+epVideo.clip(1,2);//From the first second, edit for two seconds
 ```
-* 裁剪
+* crop
 ```Java
-//参数分别是裁剪的宽，高，起始位置X，起始位置Y
+//The parameters are the crop width, height, starting position X, starting position Y
 epVideo.crop(480,360,0,0);
 ```
-* 旋转和镜像
+* rotate and mirror
 ```Java
-//第一个参数为旋转角度，第二个参数为是否镜像，仅支持90,180,270度旋转
+//The first parameter is the rotation angle, the second parameter is whether to mirror, only supports 90,180,270 degree rotation
 epVideo.rotation(90,true);
 ```
-* 添加文字
+* add logo
 ```Java
-//参数分别是添加位置的X,Y坐标,文字的字号(单位px),文字颜色,字体文件的路径,内容，Time类为显示的起始时间和持续时间
-epVideo.addText(10,10,35,"red",ttfPath,text);
-epVideo.addText(new EpText(10,10,35,"red",ttfPath,text,new EpText.Time(3,5)));
-```
-* 添加logo
-```Java
-//添加图片类
-//参数为图片路径,X,Y,图片的宽,高,是否是动图(仅支持png,jpg,gif图片,如果是gif图片,最后一个参数为true)
+// Add picture class
+// The parameter is the image path, X, Y, the width and height of the image, whether it is a moving image (only png, jpg, gif images are supported, if it is a gif image, the last parameter is true)
 EpDraw epDraw = new EpDraw(filePath,10,10,50,50,false);
 epVideo.addDraw(epDraw);
-或
-epVideo.addDraw(new EpDraw(filePath,10,10,50,50,false,3,5));//最后两个参数为显示的起始时间和持续时间
 ```
-* 添加自定义滤镜
+or
 ```Java
-//自定义滤镜，ffmpeg命令支持的滤镜都支持
-//详细效果可参考：http://blog.csdn.net/u012027644/article/details/77833484
-//具体内容参见ffmpeg filter官网：http://www.ffmpeg.org/ffmpeg-filters.html
-//举例 String filter = "lutyuv=y=maxval+minval-val:u=maxval+minval-val:v=maxval+minval-val";//底片效果
+epVideo.addDraw(new EpDraw(filePath,10,10,50,50,false,3,5));//The last two parameters are the displayed start time and duration
+```
+* Add custom filter
+```Java
+// Custom filters, all filters supported by ffmpeg command are supported
+// For detailed results, please refer to: http://blog.csdn.net/u012027644/article/details/77833484
+// For details, please refer to ffmpeg official website：http://www.ffmpeg.org/ffmpeg-filters.html
+//Examples: String filter = "lutyuv=y=maxval+minval-val:u=maxval+minval-val:v=maxval+minval-val";
 epVideo.addFilter(filter);
 ```
-* 处理单个视频
+* Processing a single video
 ```Java
 EpVideo epVideo = new EpVideo(url);
-//输出选项，参数为输出文件路径(目前仅支持mp4格式输出)
+//Output options, the parameter is the output file path (currently only supports mp4 format output)
 EpEditor.OutputOption outputOption = new EpEditor.OutputOption(outFile);
-outputOption.width = 480;//输出视频宽，如果不设置则为原始视频宽高
-outputOption.height = 360;//输出视频高度
-outputOption.frameRate = 30;//输出视频帧率,默认30
-outputOption.bitRate = 10;//输出视频码率,默认10
+outputOption.width = 480;//The width and height of the output video, if not set, the original video width and height
+outputOption.height = 360;//Output video height
+outputOption.frameRate = 30;//frame rate, default 30
+outputOption.bitRate = 10;//bit rate, default 10
 EpEditor.exec(epVideo, outputOption, new OnEditorListener());
 ```
-* 添加背景音乐
+* Add background music
 ```Java
-//参数分别是视频路径，音频路径，输出路径,原始视频音量(1为100%,0.7为70%,以此类推),添加音频音量
+//The parameters are video path, audio path, output path, original video volume (1 is 100%, 0.7 is 70%, and so on), add audio volume
 EpEditor.music(videoPath, audioPath, outfilePath, 1, 0.7, new OnEditorListener());
 ```
-* 分离音视频
+* Separate audio and video
 ```Java
-//参数分别是视频路径，输出路径，输出类型
+//The parameters are the video path, output path, and output type
 EpEditor.demuxer(videoPath, outfilePath,EpEditor.Format.MP3, new OnEditorListener());
 ```
-* 视频变速
+* Change video playback speed
 ```Java
-//参数分别是视频路径,输出路径,变速倍率（仅支持0.25-4倍),变速类型(VIDEO-视频(选择VIDEO的话则会屏蔽音频),AUDIO-音频,ALL-视频音频同时变速)
+//The parameters are video path, output path, variable speed ratio (only supports 0.25-4 times), variable speed type (VIDEO-video (if VIDEO is selected, audio will be shielded), AUDIO-audio, ALL-video audio and variable speed)
 EpEditor.changePTS(videoPath, outfilePath, 2.0f, EpEditor.PTS.ALL, new OnEditorListener());
 ```
-* 音视频倒放
+* Rewind video
 ```Java
-//参数分别是视频路径,输出路径,视频是否倒放，音频是否倒放（两个都选true的话，音视频都倒放，视频ture音频false的话，输出倒放的无音频视频，视频false音频ture的话，输入倒放的音频，音频的倒放也用这个配置）
+//The parameters are video path, output path, whether the video is reversed, and whether the audio is reversed (if both are true, the audio and video are reversed, if the video ture audio is false, the output is reversed without audio video, video false audio ture If it is, input the audio of the reverse playback, and the audio reverse playback also uses this configuration)
 EpEditor.reverse(videoPath, outfilePath, true, true, new OnEditorListener());
 ```
-* 视频转图片
+* Video to image
 ```Java
-//参数分别是视频路径,输出路径（路径用集合的形式，比如pic%03d.jpg,支持jpg和png两种图片格式）,输出图片的宽度，输出图片的高度，每秒输出图片数量（2的话就是每秒2张，0.5f的话就是每两秒一张）
+//The parameters are the video path, the output path (the path is in the form of a collection, such as pic% 03d.jpg, supports both jpg and png image formats), the width of the output picture, the height of the output picture, and the number of output pictures per second (if 2 It ’s 2 frames per second, if 0.5f, it ’s one frame every two seconds.)
 EpEditor.video2pic(videoPath, outfilePath, 720, 1080, 2, new OnEditorListener());
 ```
-* 图片转视频
+* Image to video
 ```Java
-//参数分别是图片集合路径,输出路径,输出视频的宽度，输出视频的高度，输出视频的帧率
+//The parameters are picture collection path, output path, output video width, output video height, output video frame rate
 EpEditor.pic2video(picPath, outfilePath, 480, 320, 30, new OnEditorListener());
 ```
-## 多个视频处理&合并
-* 合并视频（支持对要合并的视频进行其他处理操作）
+## Multiple video processing & merging
+* Merge video (support other processing operations on the video to be merged)
 ```Java
 ArrayList<EpVideo> epVideos = new ArrayList<>();
-epVideos.add(new EpVideo(url));//视频1
-epVideos.add(new EpVideo(url2));//视频2
-epVideos.add(new EpVideo(url3));//视频3
-//输出选项，参数为输出文件路径(目前仅支持mp4格式输出)
+epVideos.add(new EpVideo(url));//Video 1
+epVideos.add(new EpVideo(url2));//Video 2
+epVideos.add(new EpVideo(url3));//Video 3
+//Output options, the parameter is the output file path (currently only supports mp4 format output)
 EpEditor.OutputOption outputOption = new EpEditor.OutputOption(outFile);
-outputOption.width = 480;//输出视频宽，默认480
-outputOption.height = 360;//输出视频高度,默认360
-outputOption.frameRate = 30;//输出视频帧率,默认30
-outputOption.bitRate = 10;//输出视频码率,默认10
+outputOption.width = 480;//Output video width, default 480
+outputOption.height = 360;//Output video height, default 360
+outputOption.frameRate = 30;//Output video frame rate, default 30
+outputOption.bitRate = 10;//Output video bit rate, default 10
 EpEditor.merge(epVideos, outputOption, new OnEditorListener());
 ```
-* 无损合并视频(对视频格式严格，需要分辨率，帧率，码率都相同，不支持对要合并的视频进行其他处理操作，该方法合并速度很快，另：两段同格式的音频拼接也可使用该方法)
+* Lossless merged video (strict on the video format, requiring the same resolution, frame rate, and bit rate. It does not support other processing operations on the video to be merged. The method of merging is very fast. Another: two pieces of audio in the same format are also spliced. (This method can be used)
 ```Java
 ArrayList<EpVideo> epVideos = new ArrayList<>();
-epVideos.add(new EpVideo(url));//视频1
-epVideos.add(new EpVideo(url2));//视频2
-epVideos.add(new EpVideo(url3));//视频3
+epVideos.add(new EpVideo(url));//Video 1
+epVideos.add(new EpVideo(url2));//Video 2
+epVideos.add(new EpVideo(url3));//Video 3
 EpEditor.mergeByLc(epVideos, new EpEditor.OutputOption(outFile), new OnEditorListener());
 ```
-## 自定义命令
-* 输入ffmpeg命令即可（起头不用输ffmpeg,例子"-i input.mp4 -ss 0 -t 5 output.mp4",第二个参数为视频长度，单位微秒，可以填0）
+## Custom commands
+* Enter the ffmpeg command (you don't need to input ffmpeg at the beginning, for example "-i input.mp4 -ss 0 -t 5 output.mp4", the second parameter is the video length, the unit is microseconds, you can fill in 0)
 ```Java
 EpEditor.execCmd("", 0, new OnEditorListener() {
-	@Override
-	public void onSuccess() {
+@Override
+public void onSuccess() {
 
-	}
+        }
 
-	@Override
-	public void onFailure() {
+@Override
+public void onFailure() {
 
-	}
+        }
 
-	@Override
-	public void onProgress(float progress) {
+@Override
+public void onProgress(float progress) {
 
-	}
-});
+        }
+        });
 ```
