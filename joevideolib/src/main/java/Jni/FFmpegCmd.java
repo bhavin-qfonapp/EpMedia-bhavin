@@ -1,7 +1,8 @@
 package Jni;
 
-import android.support.annotation.Keep;
-import android.support.annotation.VisibleForTesting;
+
+import androidx.annotation.Keep;
+import androidx.annotation.VisibleForTesting;
 
 import VideoHandle.OnEditorListener;
 
